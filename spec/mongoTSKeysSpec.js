@@ -58,7 +58,7 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct hour of day', function () {
-            expect(keyBuilder.getHour()).toEqual('19');
+            expect(keyBuilder.getHour()).toEqual(19);
         });
 
         it('generates correct key string for samples', function () {
@@ -98,7 +98,7 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct hour of day', function () {
-            expect(keyBuilder.getHour()).toEqual('17');
+            expect(keyBuilder.getHour()).toEqual(17);
         });
 
         it('generates correct key string for samples', function () {
@@ -129,13 +129,13 @@ describe('timeseries keys suite', function () {
             var otherKeyBuilder = keyBuilderFactory.fromKeyString('testABCD:R:1511272145');
             expect(otherKeyBuilder.getSensor()).toBe('testABCD');
             expect(otherKeyBuilder.getPeriod()).toEqual(new Date('2015-11-27T20:45:00.000'));
-            expect(otherKeyBuilder.getHour()).toEqual('21');
+            expect(otherKeyBuilder.getHour()).toEqual(21);
 
             var keyBuilder = keyBuilderFactory.increaseHour(otherKeyBuilder);
 
             expect(keyBuilder.getSensor()).toBe('testABCD');
             expect(keyBuilder.getPeriod()).toEqual(new Date('2015-11-27T21:45:00.000'));
-            expect(keyBuilder.getHour()).toEqual('22');
+            expect(keyBuilder.getHour()).toEqual(22);
         });
     });
 

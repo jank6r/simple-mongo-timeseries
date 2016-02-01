@@ -3,7 +3,7 @@
 **A simple timeseries module for mongodb**
 
 
-This module is a time series layer on top of mongodb. The implementation was generally inspired by a post on the mongodb blog: http://blog.mongodb.org/post/65517193370/schema-design-for-time-series-data-in-mongodb
+This module is a time series layer on top of mongodb. The implementation was generally inspired by a post on the mongodb blog: [Schema Design for Time Series Data in MongoDB](http://blog.mongodb.org/post/65517193370/schema-design-for-time-series-data-in-mongodb).
 
 **Example Usage:**
 

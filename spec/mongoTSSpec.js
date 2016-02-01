@@ -105,21 +105,19 @@ describe('timeseries suite', function () {
     it('checks the 10min mongoTSAggregation', function (done) {
       ts.aggregateSensor(sensor).then(function (result) {
 
-        var fromDate = moment().add(-1, 'd').toDate();
-        return ts.selectAggregationBy10Min(sensor, fromDate);
+        var fromDate = moment().add(-6, 'h').toDate();
+        var toDate = moment().add(-1, 'h').toDate();
+        return ts.selectAggregationBy10Min(sensor, fromDate, toDate);
       }).then(function (result) {
 
         expect(result.sensor).toBe(sensor);
 
-        expect(result.data.length).toBeGreaterThan(138);
+        expect(result.data.length).toBe(36);
 
         expect(result.data[0].min).toBe(10);
         expect(result.data[0].max).toBe(20);
         expect(result.data[0].value).toBe(15);
 
-        expect(result.data[130].min).toBe(10);
-        expect(result.data[130].max).toBe(20);
-        expect(result.data[130].value).toBe(15);
         done();
       }).done();
     });
@@ -127,21 +125,20 @@ describe('timeseries suite', function () {
     it('checks the hour mongoTSAggregation', function (done) {
       ts.aggregateSensor(sensor).then(function (result) {
 
-        var fromDate = moment().add(-1, 'M').toDate();
-        return ts.selectAggregationByHour(sensor, fromDate);
+        var fromDate = moment().add(-6, 'h').toDate();
+        var toDate = moment().add(-1, 'h').toDate();
+        return ts.selectAggregationByHour(sensor, fromDate, toDate);
       }).then(function (result) {
+
 
         expect(result.sensor).toBe(sensor);
 
-        expect(result.data.length).toBe(24);
+        expect(result.data.length).toBe(6);
 
         expect(result.data[0].min).toBe(10);
         expect(result.data[0].max).toBe(20);
         expect(result.data[0].value).toBe(15);
 
-        expect(result.data[23].min).toBe(10);
-        expect(result.data[23].max).toBe(20);
-        expect(result.data[23].value).toBe(15);
         done();
       }).done();
     });
