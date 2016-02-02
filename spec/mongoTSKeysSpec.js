@@ -42,7 +42,7 @@ describe('timeseries keys suite', function () {
 
     describe('check output when constructed from sensor name and date ', function () {
         var sensor = 'testXYZ';
-        var date = new Date('2015-11-25T18:32:21.196');
+        var date = new Date('2015-11-25T18:32:21+01:00');
         var keyBuilder;
 
         beforeEach(function () {
@@ -58,11 +58,19 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct hour of day', function () {
-            expect(keyBuilder.getHour()).toEqual(19);
+            expect(keyBuilder.getHour()).toEqual(18);
+        });
+
+        it('generates correct hour of day', function () {
+            expect(keyBuilder.getDayTimestamp()).toEqual(new Date('2015-11-25T00:00:00+01:00').getTime() / 1000);
+        });
+
+        it('generates correct decimal minute', function () {
+            expect(keyBuilder.getDecimalMin()).toEqual(3);
         });
 
         it('generates correct key string for samples', function () {
-            expect(keyBuilder.buildReadingString()).toEqual('testXYZ:R:1511251932');
+            expect(keyBuilder.buildReadingString()).toEqual('testXYZ:R:1511251832');
         });
 
         it('generates correct key string for aggregated data', function () {
@@ -70,7 +78,7 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct regex search string', function () {
-            expect(keyBuilder.buildRegex()).toEqual(/^testXYZ:R:15112519/);
+            expect(keyBuilder.buildRegex()).toEqual(/^testXYZ:R:15112518/);
         });
 
         it('generates correct regex search string', function () {
@@ -94,11 +102,15 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct date', function () {
-            expect(keyBuilder.getPeriod()).toEqual(new Date('2015-11-24T16:09:00.000'));
+            expect(keyBuilder.getPeriod()).toEqual(new Date('2015-11-24T17:09:00+01:00'));
         });
 
         it('generates correct hour of day', function () {
             expect(keyBuilder.getHour()).toEqual(17);
+        });
+
+        it('generates correct decimal minute', function () {
+            expect(keyBuilder.getDecimalMin()).toEqual(0);
         });
 
         it('generates correct key string for samples', function () {
