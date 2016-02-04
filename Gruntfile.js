@@ -12,7 +12,7 @@ module.exports = function (grunt) {
                     specNameMatcher: 'Spec',
                     summary: true
                 },
-                all: ['spec/']
+                all: []
             },
             jshint: {
                 options: {
