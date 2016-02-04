@@ -58,11 +58,11 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct hour of day', function () {
-            expect(keyBuilder.getHour()).toEqual(18);
+            expect(keyBuilder.getHour()).toEqual(17);
         });
 
-        it('generates correct hour of day', function () {
-            expect(keyBuilder.getDayTimestamp()).toEqual(new Date('2015-11-25T00:00:00+01:00').getTime() / 1000);
+        it('generates correct timestamp of day', function () {
+            expect(keyBuilder.getDayTimestamp()).toEqual(new Date('2015-11-25T00:00:00+00:00').getTime() / 1000);
         });
 
         it('generates correct decimal minute', function () {
@@ -102,7 +102,7 @@ describe('timeseries keys suite', function () {
         });
 
         it('generates correct date', function () {
-            expect(keyBuilder.getPeriod()).toEqual(new Date('2015-11-24T17:09:00+01:00'));
+            expect(keyBuilder.getPeriod()).toEqual(new Date('2015-11-24T17:09:00+00:00'));
         });
 
         it('generates correct hour of day', function () {
@@ -111,6 +111,10 @@ describe('timeseries keys suite', function () {
 
         it('generates correct decimal minute', function () {
             expect(keyBuilder.getDecimalMin()).toEqual(0);
+        });
+
+        it('generates correct timestamp of day', function () {
+            expect(keyBuilder.getDayTimestamp()).toEqual(new Date('2015-11-24T00:00:00+00:00').getTime() / 1000);
         });
 
         it('generates correct key string for samples', function () {
@@ -136,20 +140,45 @@ describe('timeseries keys suite', function () {
 
     describe('check output when constructed from other builder', function () {
 
-        it('generates correct output when constructed from other builder', function () {
+        var otherKeyBuilder;
+        var newKeyBuilder;
 
-            var otherKeyBuilder = keyBuilderFactory.fromKeyString('testABCD:R:1511272145');
+        beforeEach(function () {
+            otherKeyBuilder = keyBuilderFactory.fromKeyString('testABCD:R:1511272145');
+            newKeyBuilder = keyBuilderFactory.increaseHour(otherKeyBuilder);
+        });
+
+        it('other builder sensor name', function () {
             expect(otherKeyBuilder.getSensor()).toBe('testABCD');
-            expect(otherKeyBuilder.getPeriod()).toEqual(new Date('2015-11-27T20:45:00.000'));
+        });
+
+        it('other builder date', function () {
+            expect(otherKeyBuilder.getPeriod()).toEqual(new Date('2015-11-27T21:45:00+00:00'));
+        });
+
+        it('other builder hour of day', function () {
             expect(otherKeyBuilder.getHour()).toEqual(21);
+        });
 
-            var keyBuilder = keyBuilderFactory.increaseHour(otherKeyBuilder);
+        it('new builder timestamp of day', function () {
+            expect(newKeyBuilder.getDayTimestamp()).toEqual(new Date('2015-11-27T00:00:00+00:00').getTime() / 1000);
+        });
 
-            expect(keyBuilder.getSensor()).toBe('testABCD');
-            expect(keyBuilder.getPeriod()).toEqual(new Date('2015-11-27T21:45:00.000'));
-            expect(keyBuilder.getHour()).toEqual(22);
+        it('new builder sensor', function () {
+            expect(newKeyBuilder.getSensor()).toBe('testABCD');
+        });
+
+        it('new builder date', function () {
+            expect(newKeyBuilder.getPeriod()).toEqual(new Date('2015-11-27T22:45:00+00:00'));
+        });
+
+        it('new builder hour', function () {
+            expect(newKeyBuilder.getHour()).toEqual(22);
+        });
+
+        it('new builder timestamp of day', function () {
+            expect(newKeyBuilder.getDayTimestamp()).toEqual(new Date('2015-11-27T00:00:00+00:00').getTime() / 1000);
         });
     });
-
 
 });
